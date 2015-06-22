@@ -2,7 +2,7 @@
 
 ## js-data-angular [![bower version](https://img.shields.io/bower/v/js-data-angular.svg?style=flat-square)](https://www.npmjs.org/package/js-data-angular) [![npm version](https://img.shields.io/npm/v/js-data-angular.svg?style=flat-square)](https://www.npmjs.org/package/js-data-angular) [![Circle CI](https://img.shields.io/circleci/project/js-data/js-data-angular/master.svg?style=flat-square)](https://circleci.com/gh/js-data/js-data-angular/tree/master) [![npm downloads](https://img.shields.io/npm/dm/js-data-angular.svg?style=flat-square)](https://www.npmjs.org/package/js-data-angular) [![License](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)](https://github.com/js-data/js-data-angular/blob/master/LICENSE)
 
-Angular wrapper for [js-data](http://www.js-data.io).
+Angular wrapper for [js-data](http://www.js-data.io). This branch swaps $http for $sails, as provided by the awesome work of [angular-sails 2.0](https://github.com/janpantel/angular-sails/tree/2.0). So you get websockets with caching, easy. All I've done is replace all http mentions with sails.
 
 #### What happened Angular-data?
 Js-data-angular is Angular-data 2.0, with [js-data](http://www.js-data.io) as the framework-agnostic core. Documentation for Angular-data 1.x can be found at [angular-data.pseudobry.com](http://angular-data.pseudobry.com).
@@ -41,7 +41,7 @@ __Latest Release:__ [![Latest Release](https://img.shields.io/github/release/js-
 
 __Status:__
 
-[![Dependency Status](https://img.shields.io/gemnasium/js-data/js-data-angular.svg?style=flat-square)](https://gemnasium.com/js-data/js-data-angular) [![Coverage Status](https://img.shields.io/coveralls/js-data/js-data-angular/master.svg?style=flat-square)](https://coveralls.io/r/js-data/js-data-angular?branch=master) [![Codacity](https://img.shields.io/codacy/e7690b906dfa471ebcc8b2bdc52e9662.svg?style=flat-square)](https://www.codacy.com/public/jasondobry/js-data-angular/dashboard) 
+[![Dependency Status](https://img.shields.io/gemnasium/js-data/js-data-angular.svg?style=flat-square)](https://gemnasium.com/js-data/js-data-angular) [![Coverage Status](https://img.shields.io/coveralls/js-data/js-data-angular/master.svg?style=flat-square)](https://coveralls.io/r/js-data/js-data-angular?branch=master) [![Codacity](https://img.shields.io/codacy/e7690b906dfa471ebcc8b2bdc52e9662.svg?style=flat-square)](https://www.codacy.com/public/jasondobry/js-data-angular/dashboard)
 
 __Supported Platforms:__
 
@@ -140,4 +140,3 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
-
