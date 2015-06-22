@@ -2,9 +2,9 @@
  * js-data-angular
  * @version 2.4.0 - Homepage <https://www.js-data.io/docs/js-data-angular/>
  * @author Jason Dobry <jason.dobry@gmail.com>
- * @copyright (c) 2014-2015 Jason Dobry 
+ * @copyright (c) 2014-2015 Jason Dobry
  * @license MIT <https://github.com/js-data/js-data-angular/blob/master/LICENSE>
- * 
+ *
  * @overview Angular wrapper for js-data.
  */
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -106,12 +106,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	var isString = DSUtils.isString;
 	var isNumber = DSUtils.isNumber;
 	var makePath = DSUtils.makePath;
-	var httpLoaded = false;
+	var sailsLoaded = false;
 
 	var adapters = [{
-	  project: 'js-data-http',
-	  name: 'http',
-	  'class': 'DSHttpAdapter'
+	  project: 'js-data-sails',
+	  name: 'sails',
+	  'class': 'DSSailsAdapter'
 	}, {
 	  project: 'js-data-localstorage',
 	  name: 'localstorage',
@@ -144,8 +144,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }
 
 	  if (Adapter) {
-	    if (adapter.name === 'http') {
-	      httpLoaded = true;
+	    if (adapter.name === 'sails') {
+	      sailsLoaded = true;
 	    }
 	    adapter.loaded = true;
 	    angular.module('js-data').provider(adapter['class'], function () {
@@ -328,7 +328,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  registerAdapter(adapters[i]);
 	}
 
-	if (!httpLoaded) {
+	if (!sailsLoaded) {
 	  (function () {
 	    var Defaults = (function () {
 	      function Defaults() {
@@ -367,11 +367,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    defaultsPrototype.forceTrailingSlash = '';
 
-	    defaultsPrototype.httpConfig = {};
+	    defaultsPrototype.sailsConfig = {};
 
-	    var DSHttpAdapter = (function () {
-	      function DSHttpAdapter(options) {
-	        _classCallCheck(this, DSHttpAdapter);
+	    var DSSailsAdapter = (function () {
+	      function DSSailsAdapter(options) {
+	        _classCallCheck(this, DSSailsAdapter);
 
 	        this.defaults = new Defaults();
 	        if (console) {
@@ -387,7 +387,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        deepMixIn(this.defaults, options);
 	      }
 
-	      _createClass(DSHttpAdapter, [{
+	      _createClass(DSSailsAdapter, [{
 	        key: 'getPath',
 	        value: function getPath(method, resourceConfig, id, options) {
 	          var _this = this;
@@ -405,7 +405,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	          if (!('method' in config)) {
 	            config.method = 'get';
 	          }
-	          return this.HTTP(deepMixIn(config, {
+	          return this.SAILS(deepMixIn(config, {
 	            url: url
 	          }));
 	        }
@@ -417,7 +417,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	          if (!('method' in config)) {
 	            config.method = 'post';
 	          }
-	          return this.HTTP(deepMixIn(config, {
+	          return this.SAILS(deepMixIn(config, {
 	            url: url,
 	            data: attrs
 	          }));
@@ -429,7 +429,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	          if (!('method' in config)) {
 	            config.method = 'put';
 	          }
-	          return this.HTTP(deepMixIn(config, {
+	          return this.SAILS(deepMixIn(config, {
 	            url: url,
 	            data: attrs || {}
 	          }));
@@ -441,7 +441,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	          if (!('method' in config)) {
 	            config.method = 'delete';
 	          }
-	          return this.HTTP(deepMixIn(config, {
+	          return this.SAILS(deepMixIn(config, {
 	            url: url
 	          }));
 	        }
@@ -541,22 +541,22 @@ return /******/ (function(modules) { // webpackBootstrap
 	        }
 	      }]);
 
-	      return DSHttpAdapter;
+	      return DSSailsAdapter;
 	    })();
 
-	    var dsHttpAdapterPrototype = DSHttpAdapter.prototype;
+	    var dsSailsAdapterPrototype = DSSailsAdapter.prototype;
 
-	    var DSHttpAdapterProvider = function DSHttpAdapterProvider() {
-	      _classCallCheck(this, DSHttpAdapterProvider);
+	    var DSSailsAdapterProvider = function DSSailsAdapterProvider() {
+	      _classCallCheck(this, DSSailsAdapterProvider);
 
 	      var _this = this;
 	      _this.defaults = {};
-	      _this.$get = ['$http', 'DS', '$q', function ($http, DS, $q) {
-	        dsHttpAdapterPrototype.HTTP = function (config) {
+	      _this.$get = ['$sails', 'DS', '$q', function ($sails, DS, $q) {
+	        dsSailsAdapterPrototype.SAILS = function (config) {
 	          var _this = this;
 	          var start = new Date();
 	          config = copy(config);
-	          config = deepMixIn(config, _this.defaults.httpConfig);
+	          config = deepMixIn(config, _this.defaults.sailsConfig);
 	          if (_this.defaults.forceTrailingSlash && config.url[config.url.length - 1] !== '/') {
 	            config.url += '/';
 	          }
@@ -584,20 +584,20 @@ return /******/ (function(modules) { // webpackBootstrap
 	            }
 	          }
 
-	          return $http(config).then(logResponse, logResponse);
+	          return $sails(config).then(logResponse, logResponse);
 	        };
 
-	        var adapter = new DSHttpAdapter(_this.defaults);
-	        DS.registerAdapter('http', adapter, { 'default': true });
+	        var adapter = new DSSailsAdapter(_this.defaults);
+	        DS.registerAdapter('sails', adapter, { 'default': true });
 	        return adapter;
 	      }];
 	    };
 
-	    angular.module('js-data').provider('DSHttpAdapter', DSHttpAdapterProvider);
+	    angular.module('js-data').provider('DSSailsAdapter', DSSailsAdapterProvider);
 	  })();
 	}
-	angular.module('js-data').run(['DS', 'DSHttpAdapter', function (DS, DSHttpAdapter) {
-	  return DS.registerAdapter('http', DSHttpAdapter, { 'default': true });
+	angular.module('js-data').run(['DS', 'DSSailsAdapter', function (DS, DSSailsAdapter) {
+	  return DS.registerAdapter('sails', DSSailsAdapter, { 'default': true });
 	}]);
 
 	// return the module name
