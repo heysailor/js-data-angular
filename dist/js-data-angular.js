@@ -560,7 +560,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	          if (_this.defaults.forceTrailingSlash && config.url[config.url.length - 1] !== '/') {
 	            config.url += '/';
 	          }
-	          config.method = config.method.toUpperCase();
+	          config.method = config.method.toLowerCase();
 	          if (typeof config.data === 'object') {
 	            config.data = removeCircular(config.data);
 	          }
